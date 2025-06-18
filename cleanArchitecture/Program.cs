@@ -1,27 +1,25 @@
-namespace SupportSystem
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+﻿using SupportSystem.Application.Services;
+using SupportSystem.Domain.Interfaces;
+using Infrastructure.Repositories;
 
-            // Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+builder.Services.AddControllers();
+// 3 Lifetimes in DI:
+// Singleton → one instance forever
+// Scoped → one instance per HTTP request (best for services/repositories)
+// Transient → new instance every time it's requested (rarely used)
 
-            var app = builder.Build();
+// When ISupportTicketRepository is called, give an instance of InMemorySupportTicketRepository
+builder.Services.AddScoped<ISupportTicketRepository, InMemorySupportTicketRepository>();
 
-            // Configure the HTTP request pipeline.
+// DI: When SupportTicketService is needed, construct it
+// and automatically inject an ISupportTicketRepository (which will be InMemorySupportTicketRepository)
+builder.Services.AddScoped<SupportTicketService>();
 
-            app.UseHttpsRedirection();
+var app = builder.Build();
 
-            app.UseAuthorization();
+app.UseHttpsRedirection();
+app.MapControllers();
 
-
-            app.MapControllers();
-
-            app.Run();
-        }
-    }
-}
+app.Run();

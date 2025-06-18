@@ -1,6 +1,9 @@
 @cleanArchitecture_HostAddress = http://localhost:5084
 
-GET {{cleanArchitecture_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{cleanArchitecture_HostAddress}}/api/supporttickets
+Content-Type: application/json
 
-###
+{
+  "title": "Mouse not working",
+  "description": "Unplugged maybe?"
+}
