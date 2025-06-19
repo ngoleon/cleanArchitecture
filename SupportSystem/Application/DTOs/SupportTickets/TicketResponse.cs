@@ -1,7 +1,7 @@
 ﻿namespace SupportSystem.Application.DTOs.SupportTickets
 {
     /// <summary>
-    /// Model for getting support ticket responses from client requests.
+    /// DTO model for getting support ticket responses from client requests.
     /// Used in GET endpoint only.
     /// </summary>
     public class TicketResponse
